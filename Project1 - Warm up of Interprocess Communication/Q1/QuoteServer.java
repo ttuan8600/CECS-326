@@ -1,6 +1,5 @@
-/**
+/*
  * Quote server listening to port 6017.
- *
  */
  
 import java.net.*;
@@ -19,9 +18,8 @@ public class QuoteServer
         // write the Date to the socket
 
         pout.println(new java.util.Date().toString());
-        // close the socket and resume
-        // listening for connections
-
+        
+        // close the socket and resume listening for connections
         client.close();
       }
     }catch(IOException ioe){

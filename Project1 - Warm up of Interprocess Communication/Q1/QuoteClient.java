@@ -1,4 +1,4 @@
-/**
+/*
  * Modified DateClient so that it requests a quote
  * from the quote server.
  */
@@ -18,6 +18,7 @@ public class QuoteClient
 			String line;
 			while ((line = bin.readLine()) != null)
 				System.out.println(line);
+
 			// close the socket
 			sock.close();
 		}catch(IOException ioe){
