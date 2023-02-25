@@ -8,5 +8,26 @@ import java.io.*;
 
 public class  EchoServer
 {
- //Your code is here
+    public static void main(String[] args){
+        try{
+            ServerSocket sock = new ServerSocket(6007);
+            // now listen for connections
+
+            while (true) {
+                Socket client = sock.accept();
+                BufferedReader bin = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                PrintWriter pout = new PrintWriter(client.getOutputStream(), true);
+                // write the Date to the socket
+
+                String line;
+                while ((line = bin.readLine()) != null)
+                    pout.println(line);
+                
+                // close the socket and resume listening for connections
+                client.close();
+            }
+        }catch(IOException ioe){
+            System.err.println(ioe);
+        }
+    }
 }
