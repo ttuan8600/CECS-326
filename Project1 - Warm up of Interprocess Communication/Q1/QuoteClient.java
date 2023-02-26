@@ -13,12 +13,12 @@ public class QuoteClient
 	  		Socket sock = new Socket("localhost", 6017);
 			InputStream in = sock.getInputStream();	
 			BufferedReader bin = new BufferedReader(new InputStreamReader(in));
-			// read the date from the socket
+			// read the quote from the socket
 
 			String line;
-			while ((line = bin.readLine()) != null)
+			while ((line = bin.readLine()) != null){
 				System.out.println(line);
-
+			}
 			// close the socket
 			sock.close();
 		}catch(IOException ioe){

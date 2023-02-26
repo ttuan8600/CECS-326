@@ -30,3 +30,29 @@ The `EchoClient` class is a simple client that connects to the `EchoServer` on p
 ## Instructions
 
 1. Compile the servers and clients code seperately using the `javac` command.
+For example:
+
+```ruby
+$ javac QuoteClient.java
+$ javac QuoteServer.java
+$ javac EchoClient.java
+$ javac EchoServer.java
+
+```
+
+2. Start the servers by running the following command in seperate terminals:
+
+```ruby
+$ java QuoteClient
+$ java QuoteServer
+$ java EchoClient
+$ java EchoServer
+```
+
+3. Entry any data in the client terminal and press enter. The server will echo back the data.
+4. To exit, close the client and server terminals using `Ctrl+C`
+
+## Contributors
+### Twan Tran
+### Bharath 
+

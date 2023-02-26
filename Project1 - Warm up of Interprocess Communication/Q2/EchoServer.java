@@ -17,12 +17,13 @@ public class  EchoServer
                 Socket client = sock.accept();
                 BufferedReader bin = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 PrintWriter pout = new PrintWriter(client.getOutputStream(), true);
-                // write the Date to the socket
+                // write the data to the socket
 
                 String line;
-                while ((line = bin.readLine()) != null)
+                while ((line = bin.readLine()) != null){
+                    System.out.println("Received: " + line);
                     pout.println(line);
-                
+                }
                 // close the socket and resume listening for connections
                 client.close();
             }
