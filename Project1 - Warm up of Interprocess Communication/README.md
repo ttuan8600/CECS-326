@@ -1,7 +1,5 @@
 # Project1 - Warm up of Interprocess Commnunication
 
-## Description
-
 This project is a Java implementation of several servers and clients in Interprocess Communication.
 
 ## Files
@@ -54,5 +52,6 @@ $ java EchoServer
 ## Contributors
 
 Twan Tran
+
 Bharath 
 
