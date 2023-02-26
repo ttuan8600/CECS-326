@@ -15,9 +15,9 @@ public class QuoteServer
       while (true) {
         Socket client = sock.accept();
         PrintWriter pout = new PrintWriter(client.getOutputStream(), true);
-        // write the Date to the socket
-
-        pout.println(new java.util.Date().toString());
+        
+        // write quote of the day to the socket
+        pout.println("If two wrongs don't make a right, try three. - Laurence J. Peter");
         
         // close the socket and resume listening for connections
         client.close();
