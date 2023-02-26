@@ -2,7 +2,7 @@
 
 ## Description
 
-This project is a Java implementation of several servers and clients in Interprocess Communication:
+This project is a Java implementation of several servers and clients in Interprocess Communication.
 
 ## Files
 
@@ -13,24 +13,23 @@ This project is a Java implementation of several servers and clients in Interpro
 
 ### QuoteClient
 
-The `QuoteClient` class is a simple client that connects to `QuoteServer` on port 6017 and requests a quote. The client reads the quote returned by the server and prints it to the console.
+The `QuoteClient` class is a simple client that connects to `QuoteServer` on port `6017` and requests a quote. The client reads the quote returned by the server and prints it to the console.
 
 ### QuoteServer
 
-The `QuoteServer` class is a simple server that listens to port 6017 and responds to client connections by sending a quote. The quotes are printable ASCII characters and should contain fewer than 512 characters, although multiple lines are allowed.
+The `QuoteServer` class is a simple server that listens to port `6017` and responds to client connections by sending a quote. The quotes are printable ASCII characters and should contain fewer than 512 characters, although multiple lines are allowed.
 
 ### EchoServer
 
-The `EchoServer` class is a simple server that listens to port 6007 and echoes back whatever the client sends to it. This server reads from the client and then writes back the result.
+The `EchoServer` class is a simple server that listens to port `6007` and echoes back whatever the client sends to it. This server reads from the client and then writes back the result.
 
 ### EchoClient
 
-The `EchoClient` class is a simple client that connects to the `EchoServer` on port 6007 and sends data to the server. The client reads input from the user and sends it to the server, and then prints any data sent back by the server.
+The `EchoClient` class is a simple client that connects to the `EchoServer` on port `6007` and sends data to the server. The client reads input from the user and sends it to the server, and then prints any data sent back by the server.
 
 ## Instructions
 
-1. Compile the servers and clients code seperately using the `javac` command.
-For example:
+1. Compile the servers and clients code seperately using the `javac` command. For example:
 
 ```ruby
 $ javac QuoteClient.java
@@ -40,7 +39,7 @@ $ javac EchoServer.java
 
 ```
 
-2. Start the servers by running the following command in seperate terminals:
+2. Start the servers by running the following command `java` in seperate terminal. For example:
 
 ```ruby
 $ java QuoteClient
@@ -53,6 +52,6 @@ $ java EchoServer
 4. To exit, close the client and server terminals using `Ctrl+C`
 
 ## Contributors
-### Twan Tran
-### Bharath 
+Twan Tran
+Bharath 
 
