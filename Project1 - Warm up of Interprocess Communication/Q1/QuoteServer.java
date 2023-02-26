@@ -8,16 +8,14 @@ import java.io.*;
 public class QuoteServer
 {
   public static void main(String[] args){
-    try{
-      ServerSocket sock = new ServerSocket(6017);
+    try(ServerSocket sock = new ServerSocket(6017)){
       // now listen for connections
-
       while (true) {
         Socket client = sock.accept();
         PrintWriter pout = new PrintWriter(client.getOutputStream(), true);
         
         // write quote of the day to the socket
-        pout.println("If two wrongs don't make a right, try three. - Laurence J. Peter");
+        pout.println("If two wrongs don't make a right, try three.\n\t\t\t\t\t- Laurence J. Peter");
         
         // close the socket and resume listening for connections
         client.close();

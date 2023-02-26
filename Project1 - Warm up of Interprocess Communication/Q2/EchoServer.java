@@ -9,10 +9,7 @@ import java.io.*;
 public class  EchoServer
 {
     public static void main(String[] args){
-        try{
-            ServerSocket sock = new ServerSocket(6007);
-            // now listen for connections
-
+        try (ServerSocket sock = new ServerSocket(6007)) {
             while (true) {
                 Socket client = sock.accept();
                 BufferedReader bin = new BufferedReader(new InputStreamReader(client.getInputStream()));
@@ -26,6 +23,10 @@ public class  EchoServer
                 }
                 // close the socket and resume listening for connections
                 client.close();
+                if(client.isClosed()){
+                    System.out.println("Client has closed the connection!");
+                    break;
+                }
             }
         }catch(IOException ioe){
             System.err.println(ioe);

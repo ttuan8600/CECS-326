@@ -18,7 +18,7 @@ public class EchoClient
 			String line;
 			while ((line = in.readLine()) != null) {
 				pout.println(line);
-				System.out.println("Server: "+bin.readLine());
+				System.out.println("Server: "+ bin.readLine());
 			}
 
 			// close the socket
