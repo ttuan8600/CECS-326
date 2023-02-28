@@ -1,2 +1,2 @@
-# CECS-326
-This includes all the Project Assignments for CECS 326 - OS of CSULB
+# CECS 326 - Operating Systems
+This repo contains all the Project Assignments for CECS-326 of CSULB
