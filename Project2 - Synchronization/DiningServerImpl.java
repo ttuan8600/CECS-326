@@ -11,29 +11,46 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class DiningServerImpl  implements DiningServer
 {  
-	ReentrantLock rtLock = new ReentrantLock[5];
-	Lock key = new ReentrantLock();
-	Condition[] cond = new Condition[5];
+	Lock key[] = new ReentrantLock[5];
+	Condition cond[] = new Condition[5];
+
+	public DiningServerImpl()
+	{
+		for(int i = 0; i < 5; i++)
+		{
+			key[i] = new ReentrantLock();
+			cond[i] = key[i].newCondition();
+		}
+	}
 
 	@Override
-	public void takeForks(int philNumber){
+	public void takeForks(int philNumber)
+	{
 		int leftFork = philNumber;
 		int rightFork = (philNumber + 1) % 5;
 
-		synchronized(this)
+		key[leftFork].lock();
+		key[rightFork].lock();
+
+		try
 		{
 			while(forks[leftFork] == 1 || forks[rightFork] == 1)
 			{
-				try
-				{
-					wait();
-				}catch(InterruptedException e)
-				{
-					e.printStackTrace();
-				}
+				cond[leftFork].await();
+				cond[rightFork].await();
 			}
+
 			forks[leftFork] = 1;
 			forks[rightFork] = 1;
+		}
+		catch(InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			key[leftFork].unlock();
+			key[rightFork].unlock();
 		}
 	}
 
@@ -43,12 +60,21 @@ public class DiningServerImpl  implements DiningServer
 		int leftFork = philNumber;
 		int rightFork = (philNumber + 1) % 5;
 
-		synchronized(this)
+		key[leftFork].lock();
+		key[rightFork].lock();
+
+		try
 		{
 			forks[leftFork] = 0;
 			forks[rightFork] = 0;
-			notifyAll();
+
+			cond[leftFork].signal();
+			cond[rightFork].signal();
+		}
+		finally
+		{
+			key[leftFork].unlock();
+			key[rightFork].unlock();
 		}
 	}
-
 }
