@@ -1,4 +1,4 @@
-/**
+/*
  * DiningServer.java
  *
  * This class contains the methods called by the  philosophers.
