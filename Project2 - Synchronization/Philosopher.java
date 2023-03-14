@@ -16,24 +16,35 @@ public class Philosopher implements Runnable
         this.server = server;
     }
     
-    @Override
     public void run()
     {
         while (true)
         {
-        try
-        {
-            Thread.sleep((int)(Math.random() * 1000));
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-        
-        System.out.println("Philosopher " + philNumber + " is thinking.");
-        server.takeForks(philNumber);
-        System.out.println("Philosopher " + philNumber + " is eating.");
-        server.returnForks(philNumber);
+            // Think for a while
+            try
+            {
+                Thread.sleep((int)(Math.random() * 1000));
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+            
+            // Try to get forks
+            server.takeForks(philNumber);
+            
+            // Eat for a while
+            try
+            {
+                Thread.sleep((int)(Math.random() * 1000));
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+            
+            // Return forks
+            server.returnForks(philNumber);
         }
     }
 }
