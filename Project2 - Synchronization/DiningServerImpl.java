@@ -11,6 +11,11 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class DiningServerImpl  implements DiningServer
 {  
+	ReentrantLock rtLock = new ReentrantLock[5];
+	Lock key = new ReentrantLock();
+	Condition[] cond = new Condition[5];
+
+	@Override
 	public void takeForks(int philNumber){
 		int leftFork = philNumber;
 		int rightFork = (philNumber + 1) % 5;
@@ -32,6 +37,7 @@ public class DiningServerImpl  implements DiningServer
 		}
 	}
 
+	@Override
 	public void returnForks(int philNumber)
 	{
 		int leftFork = philNumber;

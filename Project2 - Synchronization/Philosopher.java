@@ -16,6 +16,7 @@ public class Philosopher implements Runnable
         this.server = server;
     }
     
+    @Override
     public void run()
     {
         while (true)
