@@ -11,36 +11,21 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class DiningServerImpl  implements DiningServer
 {  
-	private Lock lock = new ReentrantLock();
-	private Condition[] condition = new Condition[5];
-	private int[] state = new int[5];
-	private int[] left = new int[5];
-	private int[] right = new int[5];
+	ReentrantLock key[] = new ReentrantLock[5];
+	Condition cond[] = new Condition[5];
 	
 	public DiningServerImpl()
 	{
 		for (int i = 0; i < 5; i++){
-			condition[i] = lock.newCondition();
-			state[i] = 0;
-			left[i] = (i + 4) % 5;
-			right[i] = (i + 1) % 5;
+			key[i] = new ReentrantLock();
+			cond[i] = key[i].newCondition();
 		}
 	}
 	
-	public void takeForks(int i)
+	@Override
+	public void takeForks(int philNumber)
 	{
-		lock.lock();
-		try{
-			state[i] = 1;
-			test(i);
-			while (state[i] != 2){
-				condition[i].await();
-			}
-		}catch (InterruptedException e){
-			e.printStackTrace();
-		}finally{
-			lock.unlock();
-		}
+		
 	}
 	
 	public void returnForks(int i)
