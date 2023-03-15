@@ -11,70 +11,55 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class DiningServerImpl  implements DiningServer
 {  
-	Lock key[] = new ReentrantLock[5];
-	Condition cond[] = new Condition[5];
-
+	private Lock lock = new ReentrantLock();
+	private Condition[] condition = new Condition[5];
+	private int[] state = new int[5];
+	private int[] left = new int[5];
+	private int[] right = new int[5];
+	
 	public DiningServerImpl()
 	{
-		for(int i = 0; i < 5; i++)
-		{
-			key[i] = new ReentrantLock();
-			cond[i] = key[i].newCondition();
+		for (int i = 0; i < 5; i++){
+			condition[i] = lock.newCondition();
+			state[i] = 0;
+			left[i] = (i + 4) % 5;
+			right[i] = (i + 1) % 5;
 		}
 	}
-
-	@Override
-	public void takeForks(int philNumber)
+	
+	public void takeForks(int i)
 	{
-		int leftFork = philNumber;
-		int rightFork = (philNumber + 1) % 5;
-
-		key[leftFork].lock();
-		key[rightFork].lock();
-
-		try
-		{
-			while(forks[leftFork] == 1 || forks[rightFork] == 1)
-			{
-				cond[leftFork].await();
-				cond[rightFork].await();
+		lock.lock();
+		try{
+			state[i] = 1;
+			test(i);
+			while (state[i] != 2){
+				condition[i].await();
 			}
-
-			forks[leftFork] = 1;
-			forks[rightFork] = 1;
-		}
-		catch(InterruptedException e)
-		{
+		}catch (InterruptedException e){
 			e.printStackTrace();
-		}
-		finally
-		{
-			key[leftFork].unlock();
-			key[rightFork].unlock();
+		}finally{
+			lock.unlock();
 		}
 	}
-
-	@Override
-	public void returnForks(int philNumber)
+	
+	public void returnForks(int i)
 	{
-		int leftFork = philNumber;
-		int rightFork = (philNumber + 1) % 5;
-
-		key[leftFork].lock();
-		key[rightFork].lock();
-
-		try
-		{
-			forks[leftFork] = 0;
-			forks[rightFork] = 0;
-
-			cond[leftFork].signal();
-			cond[rightFork].signal();
+		lock.lock();
+		try{
+			state[i] = 0;
+			test(left[i]);
+			test(right[i]);
+		}finally{
+			lock.unlock();
 		}
-		finally
-		{
-			key[leftFork].unlock();
-			key[rightFork].unlock();
+	}
+	
+	private void test(int i)
+	{
+		if (state[i] == 1 && state[left[i]] != 2 && state[right[i]] != 2){
+			state[i] = 2;
+			condition[i].signal();
 		}
 	}
 }
