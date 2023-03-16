@@ -11,40 +11,63 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class DiningServerImpl  implements DiningServer
 {  
-	ReentrantLock key[] = new ReentrantLock[5];
-	Condition cond[] = new Condition[5];
+	private Lock lock;
+	private Condition[] cond;
+	private int[] forks;
+	private int numPhil;
 	
-	public DiningServerImpl()
+	public DiningServerImpl(int numPhil)
 	{
-		for (int i = 0; i < 5; i++){
-			key[i] = new ReentrantLock();
-			cond[i] = key[i].newCondition();
+		// Initialize the variables
+		this.numPhil = numPhil;
+		lock = new ReentrantLock();
+		cond = new Condition[numPhil];
+		forks = new int[numPhil];
+
+		for (int i = 0; i < numPhil; i++){
+			cond[i] = lock.newCondition();
+			forks[i] = 2;
 		}
 	}
 	
 	@Override
 	public void takeForks(int philNumber)
 	{
-		
-	}
-	
-	public void returnForks(int i)
-	{
 		lock.lock();
 		try{
-			state[i] = 0;
-			test(left[i]);
-			test(right[i]);
+			while (forks[philNumber] < 2 || forks[(philNumber+1)%numPhil] < 2){
+				cond[philNumber].await();
+			}
+
+			forks[philNumber] -= 2;
+			forks[(philNumber + 1) % numPhil] -= 2;
+
+			// Print out to the console 
+			System.out.println("Fork #" + philNumber + " is with " + forks[philNumber]);
+			System.out.println("Fork #" + ((philNumber + 1) % numPhil) + " is with " + forks[(philNumber + 1) % numPhil]);
+		}catch (InterruptedException e){
+			e.printStackTrace();
 		}finally{
 			lock.unlock();
 		}
 	}
 	
-	private void test(int i)
+	@Override
+	public void returnForks(int philNumber)
 	{
-		if (state[i] == 1 && state[left[i]] != 2 && state[right[i]] != 2){
-			state[i] = 2;
-			condition[i].signal();
+		lock.lock();
+		try{
+			forks[philNumber] += 2;
+			forks[(philNumber + 1) % numPhil] += 2;
+
+			// Print out to the console
+			System.out.println("Fork #" + philNumber + " is with " + forks[philNumber]);
+			System.out.println("Fork #" + ((philNumber + 1) % numPhil) + " is with " + forks[(philNumber + 1) % numPhil]);
+
+			cond[(philNumber - 1 + numPhil) % numPhil].signal();
+			cond[(philNumber + 1) % numPhil].signal();
+		}finally{
+			lock.unlock();
 		}
 	}
 }

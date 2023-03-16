@@ -8,10 +8,13 @@
 public class DiningPhilosophers
 {  
   public static void main(String args[])
-  {
-    DiningServer server = new DiningServerImpl();
-    Philosopher[] philosophers = new Philosopher[5];
-    // Create 5 philosophers and have each of them run as a seperate thread
+  {  
+    // Create 5 philosophers 
+    int philNum = 5;
+    DiningServer server = new DiningServerImpl(philNum);
+    Philosopher[] philosophers = new Philosopher[philNum];
+    
+    // Have each of them run as a seperate thread
     for (int i = 0; i < 5; i++)
     {
       philosophers[i] = new Philosopher(i, server);
