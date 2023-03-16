@@ -12,21 +12,21 @@ import java.util.concurrent.locks.ReentrantLock;
 public class DiningServerImpl  implements DiningServer
 {  
 	private Lock lock;
-	private Condition[] cond;
-	private int[] forks;
+	private Condition[] forks;
+	private boolean[] available;
 	private int numPhil;
-	
+
 	public DiningServerImpl(int numPhil)
 	{
 		// Initialize the variables
-		this.numPhil = numPhil;
 		lock = new ReentrantLock();
-		cond = new Condition[numPhil];
-		forks = new int[numPhil];
-
+		forks = new Condition[numPhil];
+		available = new boolean[numPhil];
+		this.numPhil = numPhil;
+		
 		for (int i = 0; i < numPhil; i++){
-			cond[i] = lock.newCondition();
-			forks[i] = 2;
+			forks[i] = lock.newCondition();
+			available[i] = true;
 		}
 	}
 	
@@ -35,38 +35,40 @@ public class DiningServerImpl  implements DiningServer
 	{
 		lock.lock();
 		try{
-			while (forks[philNumber] < 2 || forks[(philNumber+1)%numPhil] < 2){
-				cond[philNumber].await();
+			int leftFork = philNumber;
+			int rightFork = (philNumber + 1) % numPhil;
+
+			while(!available[leftFork] || !available[rightFork]){
+				forks[leftFork].await();
+				forks[rightFork].await();
 			}
 
-			forks[philNumber] -= 2;
-			forks[(philNumber + 1) % numPhil] -= 2;
+			available[leftFork] = false;
+			System.out.println("Fork #" + leftFork + " is with " + philNumber);
 
-			// Print out to the console 
-			System.out.println("Fork #" + philNumber + " is with " + forks[philNumber]);
-			System.out.println("Fork #" + ((philNumber + 1) % numPhil) + " is with " + forks[(philNumber + 1) % numPhil]);
+			available[rightFork] = false;
+			System.out.println("Fork #" + rightFork + " is with " + philNumber);
 		}catch (InterruptedException e){
 			e.printStackTrace();
-		}finally{
+		}
+		finally {
 			lock.unlock();
 		}
 	}
 	
 	@Override
-	public void returnForks(int philNumber)
-	{
+	public void returnForks(int philNumber) {
 		lock.lock();
 		try{
-			forks[philNumber] += 2;
-			forks[(philNumber + 1) % numPhil] += 2;
+			int leftFork = philNumber;
+			int rightFork = (philNumber + 1) % numPhil;
 
-			// Print out to the console
-			System.out.println("Fork #" + philNumber + " is with " + forks[philNumber]);
-			System.out.println("Fork #" + ((philNumber + 1) % numPhil) + " is with " + forks[(philNumber + 1) % numPhil]);
+			available[leftFork] = true;
+			available[rightFork] = true;
 
-			cond[(philNumber - 1 + numPhil) % numPhil].signal();
-			cond[(philNumber + 1) % numPhil].signal();
-		}finally{
+			forks[leftFork].signal();
+			forks[rightFork].signal();
+		}finally {
 			lock.unlock();
 		}
 	}

@@ -25,30 +25,35 @@ public class Philosopher implements Runnable
     {
         try{
             while (true){
-                // Think for a while, and take a fork
-                think();
+                // Take forks
                 dServer.takeForks(philNumber);
-                // Eat for a while, then return a fork
+                System.out.println("Forks are with Philosopher #" + philNumber);
+
+                // Eating, then sleep
                 eat();
+
+                // Return forks
                 dServer.returnForks(philNumber);
+
+                // Thinking, then sleep
+                think();
             }
         }catch (InterruptedException e){
-            Thread.currentThread().interrupt();
-            return;
+            e.printStackTrace();
         }
     }
 
     private void think() throws InterruptedException
     {
         int sleepTime = rand.nextInt(2000) + 1000;
-        System.out.println("Philosopher #" + philNumber + " is thinking for " + sleepTime + "ms");
+        System.out.println("Philosopher #" + philNumber + " took " + sleepTime + "ms thinking");
         Thread.sleep(sleepTime);
     }
 
     private void eat() throws InterruptedException
     {
         int sleepTime = rand.nextInt(2000) + 1000;
-        System.out.println("Philosopher #" + philNumber + " is eating for " + sleepTime + "ms");
+        System.out.println("Philosopher #" + philNumber + " took " + sleepTime + "ms eating");
         Thread.sleep(sleepTime);
     }
 }
