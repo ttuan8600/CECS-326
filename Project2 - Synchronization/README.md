@@ -19,3 +19,9 @@ javac DiningServer.java DiningServerImpl.java Philosopher.java DiningPhilosopher
 java DiningPhilosophers
 ```
 This will start the program and you should see output in the terminal indicating the progress of the program.
+
+## Contributors
+
+Twan Tran
+
+Bharath Varma Kakarlapudi
