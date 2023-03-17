@@ -27,15 +27,13 @@ public class Philosopher implements Runnable
             while (true){
                 // Take forks
                 dServer.takeForks(philNumber);
+                Thread.sleep(rand.nextInt(2000) + 1000);
                 System.out.println("Forks are with Philosopher #" + philNumber);
-
-                // Eating, then sleep
+                // Eating
                 eat();
-
                 // Return forks
                 dServer.returnForks(philNumber);
-
-                // Thinking, then sleep
+                // Thinking
                 think();
             }
         }catch (InterruptedException e){
