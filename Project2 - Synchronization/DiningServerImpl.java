@@ -40,7 +40,7 @@ public class DiningServerImpl  implements DiningServer
 
 			while(!available[leftFork] || !available[rightFork]){
 				forks[leftFork].await();
-				forks[rightFork].await();
+				// forks[rightFork].await();
 			}
 
 			available[leftFork] = false;
