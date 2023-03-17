@@ -33,7 +33,7 @@
 This lab involves implementing a solution to the dining-philosophers problem using monitors, either with POSIX mutex locks and condition variables or Java condition variables. The problem involves five philosophers, each identified by a number 0\dots 4, and each philosopher runs as a separate thread. The philosophers alternate between thinking and eating, and to simulate both activities, each thread sleeps for a random period between one and three seconds.
 
 \subsection{Objective}
-The goal of this lab is to provide an outline of a solution to the dining-philosophers problem and to demonstrate how to implement it using monitors.
+The goal of this lab is to provide a solution to the dining-philosophers problem and to demonstrate how to implement it using monitors.
 
 \subsection{Design}
 In this lab, we implemented a solution to the Dining Philosophers problem using Java. We used the ReentrantLock, Lock and Condition classes to implement a shared monitor between the philosophers. The DiningServerImpl class is responsible for handling the synchronization between the philosophers, while the Philosopher class represents each philosopher thread. And lastly, the Philosopher class represents each philosopher thread, which alternating between eat, sleep, think.
