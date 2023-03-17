@@ -36,15 +36,15 @@ This lab involves implementing a solution to the dining-philosophers problem usi
 The goal of this lab is to provide an outline of a solution to the dining-philosophers problem and to demonstrate how to implement it using monitors.
 
 \subsection{Design}
-In this lab, we implemented a solution to the Dining Philosophers problem using Java. We used the ReentrantLock, Lock and Condition classes to implement a shared monitor between the philosophers. The DiningServerImpl class is responsible for handling the synchronization between the philosophers, while the Philosopher class represents each philosopher thread.
+In this lab, we implemented a solution to the Dining Philosophers problem using Java. We used the ReentrantLock, Lock and Condition classes to implement a shared monitor between the philosophers. The DiningServerImpl class is responsible for handling the synchronization between the philosophers, while the Philosopher class represents each philosopher thread. And lastly, the Philosopher class represents each philosopher thread, which alternating between eat, sleep, think.
 
 \section{Implementation}
 
-\subsection{DiningServer.java}
+\subsection{DiningServer.java (Bharath)}
 
 The DiningServer interface provides an interface that will be implement in DiningServerImpl class. It contains the methods for the philosophers to communicate with the DiningServer object. In the dining-philosophers problem, the DiningServer is responsible for coordinating access to the shared resources, which in this case are the forks on the table. The takeForks() method is called by a philosopher when they want to eat, and returnForks() is called when they are finished eating and ready to return the forks back on the table.
 
-\subsection{DiningServerImpl.java}
+\subsection{DiningServerImpl.java (Twan)}
 
 The DiningServerImpl class implements the DiningServer interface, which contains the methods called by the philosophers. It uses the ReentrantLock, Condition, and Lock classes from the java.util.concurrent.locks package. The constructor initializes the lock, forks, and available boolean arrays, and creates a Condition object for each fork using lock.newCondition().
 
@@ -53,21 +53,20 @@ The takeForks() method is called by a philosopher when they wish to eat. It firs
 The returnForks() method is called by a philosopher when they are finished eating. It first locks the monitor using lock.lock(), then sets both forks to available, signals the Condition objects for each fork using the signal() method, and unlocks the monitor using lock.unlock().
 
 This implementation ensures that only one philosopher can hold a fork at a time, and that no two adjacent philosophers hold their respective left forks at the same time, thus preventing deadlock.
-\subsection{DiningPhilosophers.java}
+\subsection{DiningPhilosophers.java (Bharath)}
 
 The DiningPhilosophers class has the main class of the program that starts the dining philosophers problem. It creates 5 philosopher threads and a DiningServerImpl object which implements the DiningServer interface.
 
 In the main() method, it first creates a DiningServerImpl object with the number of philosophers as the argument. Then, it creates an array of Philosopher objects and assigns each object a unique philosopher number and the DiningServerImpl object. Finally, it starts each philosopher thread by creating a new thread object and passing the corresponding Philosopher object as the target.
 
-\subsection{Philosophers.java}
+\subsection{Philosophers.java (Twan)}
 
 The Philosopher class represents each philosopher thread. The run() method is called when the thread starts, and it loops indefinitely, alternating between taking forks, eating, returning forks, and thinking. The eat() and think() methods sleep for a random amount of time from 1-3s to simulate the philosopher eating and thinking.
 
 \section{Result}
-
 \subsection{Output}
-This is the output of the program \dots
 
+This is the output of the program \dots
 
 \begin{figure}
 \centering
