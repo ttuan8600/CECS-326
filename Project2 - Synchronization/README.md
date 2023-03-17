@@ -11,7 +11,10 @@
 5. Compile the program by running the following command:
 
 ```ruby
-javac DiningServer.java DiningServerImpl.java Philosopher.java DiningPhilosophers.java
+javac DiningServer.java 
+javac DiningServerImpl.java 
+javac Philosopher.java 
+javac DiningPhilosophers.java
 ```
 6. Run the program by executing the following command:
 
