@@ -22,6 +22,7 @@ public class RoadController
       try{
          road.acquire();
          Thread.sleep(rand.nextInt(1000));
+         road.release();
       }
       // Acquire the semaphores
       eastSemaphore.acquire();
