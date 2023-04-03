@@ -12,13 +12,15 @@ public class East_village extends Thread
    private Semaphore westSemaphore;
    private Random rand;
    
-   public East_village(RoadController roadController){
-      this.roadController = roadController;
+   public East_village(Semaphore eastSemaphore, Semaphore westSemaphore){
+      this.eastSemaphore = eastSemaphore;
+      this.westSemaphore = westSemaphore;
+      rand = new Random();
    }
 
+   @Override
    public void run()
    {
-      Random rand = new Random();
       while(true){
          try{
             // Sleep for random time representing traveling
