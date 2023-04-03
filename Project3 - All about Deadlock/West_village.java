@@ -5,7 +5,7 @@
 
 import java.util.Random;
 
-public class West_village 
+public class West_village extends Thread
 {
    private RoadController roadController;
 
@@ -21,7 +21,7 @@ public class West_village
             Thread.sleep(rand.nextInt(1000));
             // Request access to the road
             roadController.requestAccessFromWest();
-            // Sleep for random time reprensting eating
+            // Sleep for random time represents doing an activity
             Thread.sleep(rand.nextInt(1000));
             // Release access to the road
             roadController.releaseAccessFromWest();
