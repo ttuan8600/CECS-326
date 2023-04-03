@@ -3,6 +3,7 @@
  *
  */
 
+import java.util.Random;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -16,7 +17,12 @@ public class RoadController
 
    public void requestAccessFromEast() throws InterruptedException
    {  
-      
+      Random rand = new Random();
+      eastVillageMutex.lock();
+      try{
+         road.acquire();
+         Thread.sleep(rand.nextInt(1000));
+      }
       // Acquire the semaphores
       eastSemaphore.acquire();
       westSemaphore.acquire();
