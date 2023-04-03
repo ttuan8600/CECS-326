@@ -4,11 +4,14 @@
  */
 
 import java.util.Random;
+import java.util.concurrent.Semaphore;
 
 public class East_village extends Thread
 {
-   private RoadController roadController;
-
+   private Semaphore eastSemaphore;
+   private Semaphore westSemaphore;
+   private Random rand;
+   
    public East_village(RoadController roadController){
       this.roadController = roadController;
    }

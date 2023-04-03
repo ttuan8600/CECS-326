@@ -3,9 +3,8 @@
  *
  */
 
-import java.util.Random;
 
-public class West_village extends Thread
+public class West_village implements Runnable
 {
    private RoadController roadController;
 
@@ -13,21 +12,18 @@ public class West_village extends Thread
       this.roadController = roadController;
    }
    
+   @Override
    public void run(){
-      Random rand = new Random();
-      while(true){
-         try{
-            // Sleep for random time representing traveling
-            Thread.sleep(rand.nextInt(1000));
-            // Request access to the road
-            roadController.requestAccessFromWest();
-            // Sleep for random time represents doing an activity
-            Thread.sleep(rand.nextInt(1000));
-            // Release access to the road
-            roadController.releaseAccessFromWest();
-         }catch(InterruptedException e){
-            e.printStackTrace();
+      try{
+         while(true){
+            if (roadController.getPrior() == 1){
+               roadController.getWestRoad();
+            }else{
+               Thread.sleep(1000);
+            }
          }
+      }catch(InterruptedException e){
+         e.printStackTrace();
       }
    }
 }
