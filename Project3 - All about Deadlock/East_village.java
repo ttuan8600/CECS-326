@@ -1,3 +1,8 @@
+/*
+ * East_village.java
+ *
+ */
+
 import java.util.Random;
 
 public class East_village extends Thread
