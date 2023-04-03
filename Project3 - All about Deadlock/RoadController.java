@@ -30,14 +30,21 @@ public class RoadController
 
    public void getWestRoad() throws InterruptedException
    {  
-      // Acquire the semaphores
-      westSemaphore.acquire();
-      eastSemaphore.acquire();
+      westVillageMutex.lock();
+      try{
+         road.acquire();
+         Thread.sleep(rand.nextInt(1000));
+         road.release();
+      }finally{
+         westVillageMutex.unlock();
+      }
    }
 
-   public void releaseAccessFromWest(){
-      // Release the semaphores
-      westSemaphore.release();
-      eastSemaphore.release();
+   public void setPrior(int priority){
+      this.currentPriority = priority;
+   }
+
+   public int getPrior(){
+      return this.currentPriority;
    }
 }
