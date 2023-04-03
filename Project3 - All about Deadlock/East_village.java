@@ -23,22 +23,22 @@ public class East_village extends Thread
    {
       try {
          while (true) {
-             // wait for a random amount of time before attempting to cross the road
-             Thread.sleep(rand.nextInt(5000));
-             
-             // acquire the eastSemaphore to enter the road
-             eastSemaphore.acquire();
-             System.out.println("A person from Eastvillage is crossing the road...");
-             
-             // wait for a random amount of time while on the road
-             Thread.sleep(rand.nextInt(5000));
-             System.out.println("The person from Eastvillage has finished crossing the road and is eating a donut.");
-             
-             // release the eastSemaphore to exit the road
-             eastSemaphore.release();
+            // wait for a random amount of time before attempting to cross the road
+            Thread.sleep(rand.nextInt(5000));
+
+            // acquire the eastSemaphore to enter the road
+            eastSemaphore.acquire();
+            System.out.println("A person from Eastvillage is crossing the road...");
+
+            // wait for a random amount of time while on the road
+            Thread.sleep(rand.nextInt(5000));
+            System.out.println("The person from Eastvillage has finished crossing the road and is eating a donut.");
+
+            // release the eastSemaphore to exit the road
+            eastSemaphore.release();
          }
-     } catch (InterruptedException e) {
+      }catch (InterruptedException e) {
          System.out.println("Thread interrupted");
-     }
+      }
    }
 }
