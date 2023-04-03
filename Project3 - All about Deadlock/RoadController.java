@@ -10,32 +10,25 @@ import java.util.concurrent.locks.ReentrantLock;
  
 public class RoadController
 {  
+   Random rand = new Random();
    private Semaphore road = new Semaphore(1);
    private Lock eastVillageMutex = new ReentrantLock();
    private Lock westVillageMutex = new ReentrantLock();
    private int currentPriority = 0; // 0: East_village, 1: West_village
 
-   public void requestAccessFromEast() throws InterruptedException
+   public void getEastRoad() throws InterruptedException
    {  
-      Random rand = new Random();
       eastVillageMutex.lock();
       try{
          road.acquire();
          Thread.sleep(rand.nextInt(1000));
          road.release();
+      }finally{
+         eastVillageMutex.unlock();
       }
-      // Acquire the semaphores
-      eastSemaphore.acquire();
-      westSemaphore.acquire();
    }
 
-   public void releaseAccessFromEast(){
-      // Release the semaphores
-      eastSemaphore.release();
-      westSemaphore.release();
-   }
-
-   public void requestAccessFromWest() throws InterruptedException
+   public void getWestRoad() throws InterruptedException
    {  
       // Acquire the semaphores
       westSemaphore.acquire();
