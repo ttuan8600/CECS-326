@@ -15,6 +15,7 @@ public class East_village extends Thread
    private RoadController roadController;
    private String[] activities = {"playing cards", "reading JJK", "eating donuts", "drinking wine"};
    
+   // Make East_village Contructor
    public East_village(RoadController roadController, String name){
       this.roadController = roadController;
       this.road =  roadController.getRoad();
@@ -23,6 +24,7 @@ public class East_village extends Thread
       this.setName(name);
    }
 
+   // Randomize the activities
    public String getAction(String[] activities){
       Random rand = new Random();
       int index = rand.nextInt(activities.length);
@@ -42,10 +44,13 @@ public class East_village extends Thread
             }
          }
          try{
+            // Accquire the road
             road.acquire();
             System.out.println(getName() + " is traveling on the road.");
+            // Sleep represting travel time on the road
             Thread.sleep(rand.nextInt(1000));
             System.out.println(getName() + " is " + getAction(activities) + ".");
+            // Sleep represting the time spent on the activity
             Thread.sleep(rand.nextInt(1000));
             System.out.println(getName() + " has finished the exchange.");
          }finally{
