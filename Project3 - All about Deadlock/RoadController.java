@@ -68,4 +68,11 @@ public class RoadController
       road.release();
    }
    
+   public void setCurrentPriority(int priority){
+      this.currentPriority = priority;
+   }
+
+   public int getPrior(){
+      return currentPriority;
+   }
 }

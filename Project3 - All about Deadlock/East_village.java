@@ -15,30 +15,35 @@ public class East_village extends Thread
    private Lock westMutex;
    private int priority;
    
-   public East_village(Semaphore road, Semaphore westSemaphore){
-      this.eastSemaphore = eastSemaphore;
-      this.westSemaphore = westSemaphore;
-      rand = new Random();
+   public East_village(Semaphore road, Lock eastMutex, Lock westMutex, int priority){
+      this.road =  road;
+      this.eastMutex = eastMutex;
+      this.westMutex = westMutex;
+      this.priority = priority;
    }
 
    @Override
    public void run()
    {
+      Random rand = new Random();
       try {
-         while (true) {
-            // wait for a random amount of time before attempting to cross the road
-            Thread.sleep(rand.nextInt(5000));
-
-            // acquire the eastSemaphore to enter the road
-            eastSemaphore.acquire();
-            System.out.println("A person from Eastvillage is crossing the road...");
-
-            // wait for a random amount of time while on the road
-            Thread.sleep(rand.nextInt(5000));
-            System.out.println("The person from Eastvillage has finished crossing the road and is eating a donut.");
-
-            // release the eastSemaphore to exit the road
-            eastSemaphore.release();
+         Thread.sleep(rand.nextInt(1000));
+         eastMutex.lock();
+         synchronized(RoadController.class){
+            if (priority == 1){
+               RoadController.setCurrentPriority(2);
+            }
+         }
+         try{
+            road.acquire();
+            System.out.println(getName() + " is traveling on the road.");
+            Thread.sleep(rand.nextInt(1000));
+            System.out.println(getName() + " is playing cards.");
+            Thread.sleep(rand.nextInt(1000));
+            System.out.println(getName() + " has finished the exchange.");
+         }finally{
+            road.release();
+            eastMutex.unlock();
          }
       }catch (InterruptedException e) {
          System.out.println("Thread interrupted");
