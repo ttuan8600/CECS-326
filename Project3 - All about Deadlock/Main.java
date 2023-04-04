@@ -1,23 +1,28 @@
 
-import java.util.concurrent.Semaphore;;
+// import java.util.concurrent.Semaphore;
+// import java.util.concurrent.locks.Lock;
+// import java.util.concurrent.locks.ReentrantLock;
+
 
 public class Main {
     public static void main(String[] args) {
-        Semaphore roadSemaphore = new Semaphore(1);
-        Semaphore westMutex = new Semaphore(1);
-        Semaphore eastMutex = new Semaphore(0);
+        RoadController roadController = new RoadController();
 
-        Thread eastVillage1 = new Thread(new East_village(roadSemaphore, eastMutex, westMutex, "East_village_1"));
-        Thread eastVillage2 = new Thread(new EastVillage(roadSemaphore, eastMutex, westMutex, "East_village_2"));
-        Thread eastVillage3 = new Thread(new EastVillage(roadSemaphore, eastMutex, westMutex, "East_village_3"));
+        West_village west_village1 = new West_village(roadController, "West_village_1");
+        West_village west_village2 = new West_village(roadController, "West_village_2");
+        West_village west_village3 = new West_village(roadController, "West_village_3");
 
-        Thread westVillage1 = new Thread(new West_village(roadSemaphore, westMutex, eastMutex, "West_village_1"));
-        Thread westVillage2 = new Thread(new WestVillage(roadSemaphore, westMutex, eastMutex, "West_village_2"));
+        East_village east_village1 = new East_village(roadController, "East_village_1");
+        East_village east_village2 = new East_village(roadController, "East_village_2");
+        East_village east_village3 = new East_village(roadController, "East_village_3");
 
-        eastVillage1.start();
-        eastVillage2.start();
-        eastVillage3.start();
-        westVillage1.start();
-        westVillage2.start();
+
+        west_village1.start();
+        west_village2.start();
+        west_village3.start();
+
+        east_village1.start();
+        east_village2.start();
+        east_village3.start();
     }
 }
