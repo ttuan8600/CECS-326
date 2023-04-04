@@ -12,8 +12,8 @@ public class RoadController
 {  
    Random rand = new Random();
    private final Semaphore road;
-   private Lock eastVillageLock;
-   private Lock westVillageLock;
+   private final Lock eastVillageLock;
+   private final Lock westVillageLock;
    private int currentPriority;
 
    public RoadController(){
@@ -23,35 +23,49 @@ public class RoadController
       this.currentPriority = 0;  // 0: East_village, 1: West_village
    }
 
-   public void getEastRoad() throws InterruptedException
+   public void getEastRoad(String villager) throws InterruptedException
    {  
-      eastVillageMutex.lock();
-      try{
-         road.acquire();
-         Thread.sleep(rand.nextInt(1000));
-         road.release();
-      }finally{
-         eastVillageMutex.unlock();
+      eastVillageLock.lock();
+
+      // Check if the villager has the priority to use the road
+      if (currentPriority != 0){
+         eastVillageLock.unlock();
+         westVillageLock.lock();
+         westVillageLock.unlock();
+         eastVillageLock.lock();
       }
+      road.acquire();
+      eastVillageLock.unlock();
+
+      System.out.println(villager + " is traveling on the road.");
+      Thread.sleep(rand.nextInt(5000));
+      System.out.println(villager + " is playing cards.");
+      Thread.sleep(rand.nextInt(5000));
+      System.out.println(villager + " has finished the exchange.");
+
+      road.release();
    }
 
-   public void getWestRoad() throws InterruptedException
+   public void getWestRoad(String villager) throws InterruptedException
    {  
-      westVillageMutex.lock();
-      try{
-         road.acquire();
-         Thread.sleep(rand.nextInt(1000));
-         road.release();
-      }finally{
-         westVillageMutex.unlock();
+      westVillageLock.lock();
+      if (currentPriority != 1){
+         westVillageLock.unlock();
+         eastVillageLock.lock();
+         eastVillageLock.unlock();
+         westVillageLock.lock();
       }
-   }
 
-   public void setPrior(int priority){
-      this.currentPriority = priority;
-   }
+      road.acquire();
+      westVillageLock.unlock();
 
-   public int getPrior(){
-      return this.currentPriority;
+      System.out.println(villager + " is traveling on the road.");
+      Thread.sleep(rand.nextInt(5000));
+      System.out.println(villager + " is playing cards.");
+      Thread.sleep(rand.nextInt(5000));
+      System.out.println(villager + " has finished the exchange.");
+
+      road.release();
    }
+   
 }
