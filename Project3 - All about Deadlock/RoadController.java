@@ -11,10 +11,17 @@ import java.util.concurrent.locks.ReentrantLock;
 public class RoadController
 {  
    Random rand = new Random();
-   private Semaphore road = new Semaphore(1);
-   private Lock eastVillageMutex = new ReentrantLock();
-   private Lock westVillageMutex = new ReentrantLock();
-   private int currentPriority = 0; // 0: East_village, 1: West_village
+   private final Semaphore road;
+   private Lock eastVillageLock;
+   private Lock westVillageLock;
+   private int currentPriority;
+
+   public RoadController(){
+      this.road = new Semaphore(1);
+      this.eastVillageLock = new ReentrantLock();
+      this.westVillageLock = new ReentrantLock();
+      this.currentPriority = 0;  // 0: East_village, 1: West_village
+   }
 
    public void getEastRoad() throws InterruptedException
    {  
