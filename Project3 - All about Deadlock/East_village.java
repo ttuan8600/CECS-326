@@ -5,14 +5,17 @@
 
 import java.util.Random;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class East_village extends Thread
 {
-   private Semaphore eastSemaphore;
-   private Semaphore westSemaphore;
-   private Random rand;
+   private Semaphore road;
+   private Lock eastMutex;
+   private Lock westMutex;
+   private int priority;
    
-   public East_village(Semaphore eastSemaphore, Semaphore westSemaphore){
+   public East_village(Semaphore road, Semaphore westSemaphore){
       this.eastSemaphore = eastSemaphore;
       this.westSemaphore = westSemaphore;
       rand = new Random();
