@@ -1,4 +1,4 @@
-### To run the Dining Philosophers problem program, follow these steps:
+### To run the Deadlock problem program, follow these steps:
 
 1. Install Java on your machine if it is not already installed. You can download it from the official Java website.
 
