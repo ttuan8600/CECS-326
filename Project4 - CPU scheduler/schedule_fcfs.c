@@ -67,9 +67,9 @@ void schedule(){
         }
         wait = turnAround - final;
 
-        printf("The average turnaround time is : %f time units \n" , turnaroundtime/num);    
-        printf("The average ResponseTime is : %f time units \n" , ResponseTime/num);
-        printf("The average WaitTime is : %f time units\n " , WaitTime/num);
+        printf("The average turnaround time is : %f time units \n" , turnAround/num);    
+        printf("The average ResponseTime is : %f time units \n" , response/num);
+        printf("The average WaitTime is : %f time units\n " , wait/num);
     }
 }
 
