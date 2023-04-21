@@ -10,7 +10,6 @@
 #include "list.h"
 #include "cpu.h"
 
-
-/*
- * Your code and design here:
- */
+struct node *head = NULL;
+struct node *current = NULL;
+struct node *new = NULL;
