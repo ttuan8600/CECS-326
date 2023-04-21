@@ -8,12 +8,10 @@
 #include "task.h"
 #include "list.h"
 #include "cpu.h"
-#include "schedulers.h"
 
 struct node *head = NULL;
 struct node *tail = NULL;
 struct node *new = NULL;
-int num = 0;
 
 void add (char *name, int prior, int burst){
     if (head == NULL){
@@ -52,6 +50,10 @@ void add (char *name, int prior, int burst){
 }
 
 void schedule(){
-    
+    struct node *ref = head;
+    while (ref != NULL){
+        run(ref->task, ref->task->burst);
+        ref = ref->next;
+    }    
 }
 
