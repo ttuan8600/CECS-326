@@ -52,25 +52,6 @@ void add (char *name, int prior, int burst){
 }
 
 void schedule(){
-    int final = 0;
-    float turnAround = 0;
-    float wait = 0;
-    float response = 0;
-
-    struct node *ref = head;
-    while (ref != NULL){
-        num += 1;
-        run(ref->task, ref->task->burst);
-        final += ref->task->burst;
-        turnAround += final;
-        if (ref->next != NULL){
-            response += 1;
-        }
-        wait = turnAround - final;
-
-        printf("The average turnaround time is : %f time units \n" , turnAround/num);    
-        printf("The average ResponseTime is : %f time units \n" , response/num);
-        printf("The average WaitTime is : %f time units\n " , wait/num);
-    }
+    
 }
 
