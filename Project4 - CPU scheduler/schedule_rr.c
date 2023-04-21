@@ -14,10 +14,8 @@ struct node *head = NULL;
 struct node *last = NULL;
 struct node *new = NULL;
 struct node *test = NULL;
-int num = 0;
 
 void add(char *name, int priority, int burst){
-    num+=1
     if (head == NULL){
         head = malloc(sizeof(struct node));
         last = malloc(sizeof(struct node));
@@ -43,7 +41,7 @@ void add(char *name, int priority, int burst){
 
 // invoke the scheduler
 void schedule(){
-    struct node *current = head;
+    struct node *curr = head;
     struct node *ref = head;
     struct node *monitor = NULL;
     monitor = malloc(sizeof(struct node));
@@ -55,17 +53,17 @@ void schedule(){
         monitor = monitor->next;
     }
     while (totburst > 0){
-        if (current->task->burst > 10){
-            run(current->task, 10);
-            newburst = current->task->burst - 10;
-            current->task->burst = newburst;
+        if (curr->task->burst > 10){
+            run(curr->task, 10);
+            newburst = curr->task->burst - 10;
+            curr->task->burst = newburst;
             totburst -= 10;
-            current = current->next;
+            curr = curr->next;
         }else{
-            run(current->task, current->task->burst);
-            totburst -= current->task->burst;
-            current->task->burst = 0;
-            current = current->next;
+            run(curr->task, curr->task->burst);
+            totburst -= curr->task->burst;
+            curr->task->burst = 0;
+            curr = curr->next;
         }
     }
 }
