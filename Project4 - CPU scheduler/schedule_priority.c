@@ -12,8 +12,7 @@
 
 struct node *head = NULL;
 struct node *curr = NULL;
-struct node *new = NULL;
-struct node *final = NULL;
+// struct node *final = NULL;
 
 void add(char *name, int priority, int burst)
 {
@@ -64,10 +63,10 @@ void add(char *name, int priority, int burst)
 
 void schedule()
 {
-    struct node *ref = head;
-    while (ref != NULL)
+    curr = head;
+    while (curr != NULL)
     {
-        run(ref->task, ref->task->burst);
-        ref = ref->next;
+        run(curr->task, curr->task->burst);
+        curr = curr->next;
     }
 }

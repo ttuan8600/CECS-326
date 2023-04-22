@@ -15,8 +15,10 @@ struct node *last = NULL;
 struct node *new = NULL;
 struct node *test = NULL;
 
-void add(char *name, int priority, int burst){
-    if (head == NULL){
+void add(char *name, int priority, int burst)
+{
+    if (head == NULL)
+    {
         head = malloc(sizeof(struct node));
         last = malloc(sizeof(struct node));
         // set the name of the task
@@ -27,7 +29,9 @@ void add(char *name, int priority, int burst){
         // set the next node to be null
         head->next = NULL;
         last = head;
-    }else{
+    }
+    else
+    {
         new = malloc(sizeof(struct node));
         last->next = new;
         new->task = malloc(sizeof(struct task));
@@ -40,7 +44,8 @@ void add(char *name, int priority, int burst){
 }
 
 // invoke the scheduler
-void schedule(){
+void schedule()
+{
     struct node *curr = head;
     struct node *ref = head;
     struct node *monitor = NULL;
@@ -48,22 +53,84 @@ void schedule(){
     monitor = head;
     int newburst = 0;
     int totburst = 0;
-    while (monitor != NULL){
-        totburst += monitor->task->burst;
-        monitor = monitor->next;
-    }
-    while (totburst > 0){
-        if (curr->task->burst > 10){
+    int check = 1;
+
+    while (ref != NULL)
+    {
+        if (ref->task->bust >= 10)
+        {
+            newburst = ref->task->burst - 10;
+            if (curr != head)
+            {
+                while (monitor != curr)
+                {
+                    if (curr->task > name == monitor->task->name)
+                    {
+                        check = 0;
+                        break;
+                    }
+                    monitor = monitor->next;
+                }
+                monitor = head;
+            }
+            totburst = totburst + 10;
+            ref->task->burst = 10;
             run(curr->task, 10);
-            newburst = curr->task->burst - 10;
-            curr->task->burst = newburst;
-            totburst -= 10;
-            curr = curr->next;
-        }else{
-            run(curr->task, curr->task->burst);
-            totburst -= curr->task->burst;
-            curr->task->burst = 0;
-            curr = curr->next;
+        }
+        else if (ref->task->burst < 10)
+        {
+            newburst = 0;
+            totburst = totburst + ref->task->burst;
+            run(curr->task, ref->task->burst);
+        }
+        while (1)
+        {
+            if (curr->next != NULL)
+            {
+                curr = curr->next;
+                if (curr->next == NULL)
+                {
+                    if (newburst != 0)
+                    {
+                        struct node *newnode = malloc(sizeof(struct node));
+                        newnode->task = malloc(sizeof(struct task));
+                        newnode->task->name = curr->task->name;
+                        newnode->task->burst = newburst;
+                        newnode->task->priority = curr->task->priority;
+                        ref = ref->next;
+                        curr->next = newnode;
+                        newnode->next = NULL;
+                        curr = ref;
+                        break;
+                    }
+                    else if (newburst == 0)
+                    {
+                        ref = ref->next;
+                        curr = ref;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                if (newburst != 0)
+                {
+                    struct node *new = malloc(sizeof(struct node));
+                    new->task = malloc(sizeof(struct task));
+                    new->task->name = ref->task->name;
+                    new->task->burst = ref->task->priority;
+                    new->task->priority = newburst;
+                    ref->next = new;
+                    ref = ref->next;
+                    new->next = NULL;
+                    curr = new;
+                }
+                else
+                {
+                    ref = ref->next;
+                }
+                break;
+            }
         }
     }
 }
