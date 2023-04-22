@@ -1,7 +1,7 @@
 /**
  * FCFS scheduling
  */
- 
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -13,8 +13,10 @@ struct node *head = NULL;
 struct node *tail = NULL;
 struct node *new = NULL;
 
-void add (char *name, int prior, int burst){
-    if (head == NULL){
+void add(char *name, int prior, int burst)
+{
+    if (head == NULL)
+    {
         head = malloc(sizeof(struct node));
         tail = malloc(sizeof(struct node));
 
@@ -29,7 +31,9 @@ void add (char *name, int prior, int burst){
 
         // set the tail to be the head
         tail = head;
-    }else{
+    }
+    else
+    {
         // create a new node
         new = malloc(sizeof(struct node));
 
@@ -49,11 +53,12 @@ void add (char *name, int prior, int burst){
     }
 }
 
-void schedule(){
+void schedule()
+{
     struct node *ref = head;
-    while (ref != NULL){
+    while (ref != NULL)
+    {
         run(ref->task, ref->task->burst);
         ref = ref->next;
-    }    
+    }
 }
-
