@@ -54,7 +54,7 @@ void schedule(){
     while (ref != NULL){
         if (ref->task->burst >= 10){
             newburst = ref->task->burst - 10;
-            totburst = totburst + 10; // totburst is
+            totburst = totburst + 10;
             ref->task->burst = 10;
             run(ref->task, 10);
         }else if (ref->task->burst < 10){
@@ -64,7 +64,7 @@ void schedule(){
         }while (1)
         {
             if (current->next != NULL){
-                current = current->next; // current = T4;
+                current = current->next;
                 if (current->next == NULL){
                     if (newburst != 0){
                         struct node *newnode = malloc(sizeof(struct node));
