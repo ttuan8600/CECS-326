@@ -2,6 +2,11 @@
  * DiningServer.java
  *
  * This class contains the methods called by the  philosophers.
+ * 
+ * To synchronize access to the forks, the class uses a Lock object. 
+ * This allows only one philosopher at a time to acquire or release the forks. 
+ * The forks array is an array of Condition objects, with one Condition object for each fork. 
+ * These Condition objects are used to allow the philosophers to wait until the forks they need become available
  *
  */
 
